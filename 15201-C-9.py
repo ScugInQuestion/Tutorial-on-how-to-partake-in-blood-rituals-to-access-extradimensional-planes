@@ -63,7 +63,10 @@ class Boarder():
 
 class Event():
     def __init__(self):
-        self.Textlist=["You find nothing.","You find another seaman.","You find a small building of unknown make or model."]
+        self.Textlist=["You find nothing.",
+                       "You find a small building of unknown make or model.",
+#                       "You find another seaman."
+                       ]
         self.Text="Placeholder"
         self.Combat=False
 
@@ -79,6 +82,7 @@ class Event():
             self.Combat=True
         else:
             self.Combat=False
+
 E=Event()   
 
 class Choice():
@@ -90,23 +94,78 @@ class Choice():
         self.Choice=input("[ACTION HERE] ")
 
     def ChoiceResult(self):
-        if E.Text=="You find nothing." or "You find a small building of unknown make or model.":
-            if self.Choice=="Walk"or"Run"or"Move"or"Advance"or"Progress":
-                E.randomizeEvent()
-                E.EventOutput
-        elif E.Combat==True:
-            B=Boarder()
-            return(B)
-            if self.Choice=="Swing"or"Slash"or"Cut"or"Cleave"or"Bash":
-                if S.Weapon=="Construction hammer"or"Knife"or"Bat":
-                    B.Life-=1
-                    E.Text=="You manage to inflict a minor wound."
-                    E.EventOutput()
-            if B.Life<=0:
-                E.Combat==False
-        else:
-           print("Such an option is not availible. (Check for typos)")
-           print(E.Text)
+##        if E.Combat==True:
+##            B=Boarder()
+##            return(B)
+##            if self.Choice=="Swing"or"Slash"or"Cut"or"Cleave"or"Bash":
+##                if S.Weapon=="Construction hammer"or"Knife"or"Bat":
+##                    B.Life-=1
+##                    E.Text=="You manage to inflict a minor wound."
+##                    E.EventOutput()
+##                else:
+##                   print("Such an option is not availible. (Can't run, check for typos)")
+##                   print(E.Text)
+##            if B.Life<=0:
+##                E.Combat==False
+        if E.Combat==False:
+            match(S.Dead):
+                case(True):
+                    self.Text="""You tumble onto your stomach, unable to remain upright any longer.
+Eyes shut, you collapse into the sea from which you came."""
+                    print(self.Text)
+                    time.sleep(3)
+                    quit()
+            match(E.Text):
+                case("You find nothing."):
+                    match(self.Choice):
+                        case("Walk"):
+                            E.randomizeEvent()
+                            E.EventOutput()
+                        case("Run"):
+                            E.randomizeEvent()
+                            E.EventOutput()
+                        case("Move"):
+                            E.randomizeEvent()
+                            E.EventOutput()
+                        case("Advance"):
+                            E.randomizeEvent()
+                            E.EventOutput()
+                        case("Progress"):
+                            E.randomizeEvent()
+                            E.EventOutput()
+                        case("END OF THE LINE, LITTLE MAN!"):
+                            S.Wounds=10
+                        case(_):
+                            print("""Such is not an option.
+Check for typos?
+Actions must be ONE WORD LONG.""")
+                case("You find a small building of unknown make or model."):
+                    match(self.Choice):
+                        case("Walk"):
+                            E.randomizeEvent()
+                            E.EventOutput()
+                        case("Run"):
+                            E.randomizeEvent()
+                            E.EventOutput()
+                        case("Move"):
+                            E.randomizeEvent()
+                            E.EventOutput()
+                        case("Advance"):
+                            E.randomizeEvent()
+                            E.EventOutput()
+                        case("Progress"):
+                            E.randomizeEvent()
+                            E.EventOutput()
+                        case("Enter"):
+                            E.Text="You go inside the building"
+                            E.EventOutput()
+                        case("END OF THE LINE, LITTLE MAN!"):
+                            S.Wounds=10
+                        case(_):
+                            print("""Such is not an option.
+Check for typos?
+Actions must be ONE WORD LONG.""")
+
 
 C=Choice()    
         
@@ -128,6 +187,7 @@ E.randomizeEvent()
 E.EventOutput()
 while True:
     C.ChoiceInput()
+    time.sleep(0.35)
     C.ChoiceResult()
 
         
