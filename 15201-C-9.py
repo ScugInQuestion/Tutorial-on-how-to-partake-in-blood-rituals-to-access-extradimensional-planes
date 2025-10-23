@@ -63,15 +63,21 @@ class Boarder():
 
 class Event():
     def __init__(self):
-        self.Textlist=["You find nothing.",
+        self.Textlist1=["You find nothing.",
                        "You find a small building of unknown make or model.",
 #                       "You find another seaman."
+                       ]
+        self.Textlist2=[
+                       "' 'Sup, the name's Jim.' it said."
                        ]
         self.Text="Placeholder"
         self.Combat=False
 
-    def randomizeEvent(self):
-        self.Text=random.choice(self.Textlist)
+    def randomizeEvent1(self):
+        self.Text=random.choice(self.Textlist1)
+
+    def randomizeEvent2(self):
+        self.Text=random.choice(self.Textlist2)
 
     def EventOutput(self):
         print(self.Text)
@@ -119,19 +125,19 @@ Eyes shut, you collapse into the sea from which you came."""
                 case("You find nothing."):
                     match(self.Choice):
                         case("Walk"):
-                            E.randomizeEvent()
+                            E.randomizeEvent1()
                             E.EventOutput()
                         case("Run"):
-                            E.randomizeEvent()
+                            E.randomizeEvent1()
                             E.EventOutput()
                         case("Move"):
-                            E.randomizeEvent()
+                            E.randomizeEvent1()
                             E.EventOutput()
                         case("Advance"):
-                            E.randomizeEvent()
+                            E.randomizeEvent1()
                             E.EventOutput()
                         case("Progress"):
-                            E.randomizeEvent()
+                            E.randomizeEvent1()
                             E.EventOutput()
                         case("END OF THE LINE, LITTLE MAN!"):
                             S.Wounds=10
@@ -142,22 +148,24 @@ Actions must be ONE WORD LONG.""")
                 case("You find a small building of unknown make or model."):
                     match(self.Choice):
                         case("Walk"):
-                            E.randomizeEvent()
+                            E.randomizeEvent1()
                             E.EventOutput()
                         case("Run"):
-                            E.randomizeEvent()
+                            E.randomizeEvent1()
                             E.EventOutput()
                         case("Move"):
-                            E.randomizeEvent()
+                            E.randomizeEvent1()
                             E.EventOutput()
                         case("Advance"):
-                            E.randomizeEvent()
+                            E.randomizeEvent1()
                             E.EventOutput()
                         case("Progress"):
-                            E.randomizeEvent()
+                            E.randomizeEvent1()
                             E.EventOutput()
                         case("Enter"):
-                            E.Text="You go inside the building"
+                            E.Text="""You go inside the building, finding a... grey seaman?
+Its eyes glow yellow, it wears a carefree expression.
+It has a tail... whatever that could be for is unknown."""
                             E.EventOutput()
                         case("END OF THE LINE, LITTLE MAN!"):
                             S.Wounds=10
@@ -165,6 +173,30 @@ Actions must be ONE WORD LONG.""")
                             print("""Such is not an option.
 Check for typos?
 Actions must be ONE WORD LONG.""")
+                case("""You go inside the building, finding a... grey seaman?
+Its eyes glow yellow, it wears a carefree expression.
+It has a tail... whatever that could be for is unknown."""):
+                    match(self.Choice):
+                        case("Fight"):
+                            E.Text="""Your bones liquefy, you collapse onto the floor as Jim taunts you.
+'Sorry bud, not a boss fight.'
+You die, lungs collapsing as you melt into the blood from whence you came."""
+                            E.EventOutput()
+                            time.sleep(3)
+                            quit()
+                        case("Commune"):
+                            E.randomizeEvent2()
+                            E.EventOutput()
+                        case("Leave"):
+                            E.randomizeEvent1()
+                            E.EventOutput()
+                        case("Exit"):
+                            E.randomizeEvent1()
+                            E.EventOutput()
+                case(_):
+                    print("""Everything around you turns various shades of grey, a voice rings in your head.
+'Hey, time god here, you've hit the end of this timeline. Nothin left 'ere.'
+'I think you should restart the game, but I can't stop ya.'""")
 
 
 C=Choice()    
@@ -183,7 +215,7 @@ S=Sailor()
 S.WhoAreYou()
 time.sleep(3)
 
-E.randomizeEvent()
+E.randomizeEvent1()
 E.EventOutput()
 while True:
     C.ChoiceInput()
