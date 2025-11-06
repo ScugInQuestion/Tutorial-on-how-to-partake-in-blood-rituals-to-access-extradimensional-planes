@@ -2,277 +2,378 @@ import time
 import random
 
 
-class Sailor():
+class Sailor:
+    weapon: list[str]  # or should it just be str??? ~Cole
+    wounds: int
+    strength: int
+    status: str
+    tendancies: list[str]
+    last_stand: bool
+    dead: bool
+
     def __init__(self):
-        self.Weapon=["Construction hammer","Knife","Bat",
-                     "Mace","Shortsword","Combat Knife",
-#                     "Rapier","Spear","Warhammer","Zweihander"
-                     ]
-        self.Wounds=0
-        self.Strength=0
-        self.Status="Fine"
-        self.Tendancies=["Stoat","Magpie","Hare"]
-        self.LastStand=False
-        self.Dead=False
+        self.weapon = [
+            "Construction hammer",
+            "Knife",
+            "Bat",
+            "Mace",
+            "Shortsword",
+            "Combat Knife",
+            #                     "Rapier","Spear","Warhammer","Zweihander"
+        ]
+        self.wounds = 0
+        self.strength = 0
+        self.status = "Fine"
+        self.tendancies = ["Stoat", "Magpie", "Hare"]
+        self.last_stand = False
+        self.dead = False
+
+    def attack(self):
+        if self.weapon == "Bare Hands":
+            self.strength = 1
+
+    def death(self):
+        if self.wounds >= 10:
+            self.dead = True
+
+    def who_are_you(self):
+        print(
+            "You are a Sailor-class seaman with",
+            self.wounds,
+            "damage sustained, are currently",
+            self.status,
+            ". You have the tendancies of the",
+            random.choice(self.tendancies),
+            "and are armed with a",
+            random.choice(self.weapon),
+            ".",
+        )
 
 
-    def Attack(self):
-        if Weapon=="Bare Hands":
-            self.Strength=1
-    
-    def Death(self):
-        if Wounds>=10:
-            self.Dead=True
+S = Sailor()
 
-    def WhoAreYou(self):
-        print("You are a Sailor-class seaman with",self.Wounds,"damage sustained, are currently",self.Status,". You have the tendancies of the",random.choice(self.Tendancies),"and are armed with a",random.choice(self.Weapon),".")
-S=Sailor()
 
-class Boarder():
+class Boarder:
+    tier: int
+    weapon1: list[str]  # or str? ~Cole
+    weapon2: list[str]
+    weapon3: list[str]
+    weapon4: list[str]
+    weapon5: list[str]
+    wounds: int
+    max_life: int
+    life: int
+    stamina: int
+    status: str
+    dead: bool
+
     def __init__(self):
-        self.Tier=random.randint(1,5)
-        self.Weapon1=["Bare Hands","Bare Hands","Bare Hands","Construction hammer","Knife","Bat"]
-        self.Weapon2=["Construction hammer","Knife","Bat"]
-        self.Weapon3=["Spear","Shortsword","Combat Knife"]
-        self.Weapon4=["Rapier","Mace","Warhammer","Zweihander"]
-        self.Weapon5=["Whipsword","Grand Gavel","Jousting Lance"]
-        self.Wounds=0
-        self.MaxLife=random.randint(1,5)*self.Tier+self.Tier
-        self.Life=self.MaxLife
-        self.Stamina=5
-        self.Status="Fine"
-        self.Dead=False
-        
-        
+        self.tier = random.randint(1, 5)
+        self.weapon1 = [
+            "Bare Hands",
+            "Bare Hands",
+            "Bare Hands",
+            "Construction hammer",
+            "Knife",
+            "Bat",
+        ]
+        self.weapon2 = ["Construction hammer", "Knife", "Bat"]
+        self.weapon3 = ["Spear", "Shortsword", "Combat Knife"]
+        self.weapon4 = ["Rapier", "Mace", "Warhammer", "Zweihander"]
+        self.weapon5 = ["Whipsword", "Grand Gavel", "Jousting Lance"]
+        self.wounds = 0
+        self.max_life = random.randint(1, 5) * self.tier + self.tier
+        self.life = self.max_life
+        self.stamina = 5
+        self.status = "Fine"
+        self.dead = False
 
-    def Death(self):
-        if Wounds>=MaxLife:
-            Dead=True
+    def death(self):
+        if self.wounds >= self.max_life:
+            self.dead = True
 
-    def WhoAmI(self):
-        if self.Tier==1:
-            print("This is an oarsman-grade seaman with ",self.MaxLife," Health,",self.Wounds,"Damage sustained and a",random.choice(self.Weapon1),".")
-        if self.Tier==2:
-            print("This is a sailor-grade seaman with ",self.MaxLife," Health,",self.Wounds,"Damage sustained and a",random.choice(self.Weapon2),".")
-        if self.Tier==3:
-            print("This is a corsair-grade seaman with ",self.MaxLife," Health,",self.Wounds,"Damage sustained and a",random.choice(self.Weapon3),".")
-        if self.Tier==4:
-            print("This is a quartermaster-grade seaman with ",self.MaxLife," Health,",self.Wounds,"Damage sustained and a",random.choice(self.Weapon4),".")
-        if self.Tier==5:
-            print("This is a captain-grade seaman with ",self.MaxLife," Health,",self.Wounds,"Damage sustained a",random.choice(self.Weapon5),".")
+    def who_am_i(self):
+        if self.tier == 1:
+            print(
+                "This is an oarsman-grade seaman with ",
+                self.max_life,
+                " Health,",
+                self.wounds,
+                "Damage sustained and a",
+                random.choice(self.weapon1),
+                ".",
+            )
+        if self.tier == 2:
+            print(
+                "This is a sailor-grade seaman with ",
+                self.max_life,
+                " Health,",
+                self.wounds,
+                "Damage sustained and a",
+                random.choice(self.weapon2),
+                ".",
+            )
+        if self.tier == 3:
+            print(
+                "This is a corsair-grade seaman with ",
+                self.max_life,
+                " Health,",
+                self.wounds,
+                "Damage sustained and a",
+                random.choice(self.weapon3),
+                ".",
+            )
+        if self.tier == 4:
+            print(
+                "This is a quartermaster-grade seaman with ",
+                self.max_life,
+                " Health,",
+                self.wounds,
+                "Damage sustained and a",
+                random.choice(self.weapon4),
+                ".",
+            )
+        if self.tier == 5:
+            print(
+                "This is a captain-grade seaman with ",
+                self.max_life,
+                " Health,",
+                self.wounds,
+                "Damage sustained a",
+                random.choice(self.weapon5),
+                ".",
+            )
 
-class Event():
+
+class Event:
+    textlist1: list[str]
+    textlist2: list[str]
+    text: str
+    combat: bool
+
     def __init__(self):
-        self.Textlist1=["You find nothing.",
-                       "You find a small building of unknown make or model.",
-#                       "You find another seaman."
-                       ]
-        self.Textlist2=[
-                       "' 'Sup, the name's Jim.' it said."
-                       ]
-        self.Text="Placeholder"
-        self.Combat=False
+        self.textlist1 = [
+            "You find nothing.",
+            "You find a small building of unknown make or model.",
+            #                       "You find another seaman."
+        ]
+        self.textlist2 = ["' 'Sup, the name's Jim.' it said."]
+        self.text = "Placeholder"
+        self.combat = False
 
-    def randomizeEvent1(self):
-        self.Text=random.choice(self.Textlist1)
+    def randomize_event1(self):
+        self.text = random.choice(self.textlist1)
 
-    def IsDead(self):
-        if S.Dead==True:
-            self.Text="""You collapse onto the ground, vision fading and your mangled limbs weak.
+    def is_dead(self):
+        if S.dead:
+            self.text = """You collapse onto the ground, vision fading and your mangled limbs weak.
 Your mind grows still as life leaves your body.
 You have died, your body having melted back into the sea."""
 
-    def randomizeEvent2(self):
-        self.Text=random.choice(self.Textlist2)
+    def randomize_event2(self):
+        self.text = random.choice(self.textlist2)
 
-    def EventOutput(self):
-        print(self.Text)
-        
-        
-    def IsCombat(self):
-        if self.Text=="You find another seaman.":
-            self.Combat=True
+    def event_output(self):
+        print(self.text)
+
+    def is_combat(self):
+        if self.text == "You find another seaman.":
+            self.combat = True
         else:
-            self.Combat=False
+            self.combat = False
 
-E=Event()   
 
-class Choice():
+E = Event()
+
+
+class Choice:
+    choice: str
+
     def __init__(self):
-        self.Choice="Placeholder"
+        self.choice = "Placeholder"
 
+    def choice_input(self):
+        self.choice = input("[ACTION HERE] ")
 
-    def ChoiceInput(self):
-        self.Choice=input("[ACTION HERE] ")
-
-    def ChoiceResult(self):
-            match(E.Text):
-                case("""You collapse onto the ground, vision fading and your mangled limbs weak.
+    def choice_result(self):
+        match E.text:
+            case """You collapse onto the ground, vision fading and your mangled limbs weak.
 Your mind grows still as life leaves your body.
-You have died, your body having melted back into the sea."""):
-                    match(self.Choice):
-                        case(_):
-                            E.EventOutput()
-                            time.sleep(3)
-                            quit()
-            if E.Combat==True:
-                match(E.Text):
-                    case("You find another seaman."):
-                        B=Boarder()
-                        match(self.Choice):
-                            case("Swipe"):
-                                if S.Weapon=="Construction hammer"or"Knife"or"Bat":
-                                    B.Life-=1
-                                    E.Text="You manage to inflict a minor wound."
-                                elif S.Weapon=="Shortsword"or"Combat Knife"or"Mace":
-                                    B.Life-=3
-                                    E.Text="Your weapon manages to deal considerable damage."
-                                E.EventOutput()
-                            case("Slice"):
-                                if S.Weapon=="Construction hammer"or"Knife"or"Bat":
-                                    B.Life-=1
-                                    E.Text="You manage to inflict a minor wound."
-                                if S.Weapon=="Shortsword"or"Combat Knife"or"Mace":
-                                    B.Life-=3
-                                    E.Text="Your weapon manages to deal considerable damage."
-                                E.EventOutput()
-                            case("Bash"):
-                                if S.Weapon=="Construction hammer"or"Knife"or"Bat":
-                                    B.Life-=1
-                                    E.Text="You manage to inflict a minor wound."
-                                if S.Weapon=="Shortsword"or"Combat Knife"or"Mace":
-                                    B.Life-=3
-                                    E.Text="Your weapon manages to deal considerable damage."
-                                E.EventOutput()
-                            case("Swing"):
-                                if S.Weapon=="Construction hammer"or"Knife"or"Bat":
-                                    B.Life-=1
-                                    E.Text="You manage to inflict a minor wound."
-                                if S.Weapon=="Shortsword"or"Combat Knife"or"Mace":
-                                    B.Life-=3
-                                    E.Text="Your weapon manages to deal considerable damage."
-                                E.EventOutput()
-                            case("Slash"):
-                                if S.Weapon=="Construction hammer"or"Knife"or"Bat":
-                                    B.Life-=1
-                                    E.Text="You manage to inflict a minor wound."
-                                if S.Weapon=="Shortsword"or"Combat Knife"or"Mace":
-                                    B.Life-=3
-                                    E.Text="Your weapon manages to deal considerable damage."
-                                E.EventOutput()
-                if B.Life<=0:
-                    del B
-                    E.Text="""The enemy collapses, too battered to remain upright.
+You have died, your body having melted back into the sea.""":
+                match self.choice:
+                    case _:
+                        E.event_output()
+                        time.sleep(3)
+                        quit()
+        if E.combat:
+            match E.text:
+                case "You find another seaman.":
+                    B = Boarder()
+                    match self.choice:
+                        case "Swipe":
+                            if S.weapon == "Construction hammer" or "Knife" or "Bat":
+                                B.life -= 1
+                                E.text = "You manage to inflict a minor wound."
+                            elif S.weapon == "Shortsword" or "Combat Knife" or "Mace":
+                                B.life -= 3
+                                E.text = (
+                                    "Your weapon manages to deal considerable damage."
+                                )
+                            E.event_output()
+                        case "Slice":
+                            if S.weapon == "Construction hammer" or "Knife" or "Bat":
+                                B.life -= 1
+                                E.text = "You manage to inflict a minor wound."
+                            if S.weapon == "Shortsword" or "Combat Knife" or "Mace":
+                                B.life -= 3
+                                E.text = (
+                                    "Your weapon manages to deal considerable damage."
+                                )
+                            E.event_output()
+                        case "Bash":
+                            if S.weapon == "Construction hammer" or "Knife" or "Bat":
+                                B.life -= 1
+                                E.text = "You manage to inflict a minor wound."
+                            if S.weapon == "Shortsword" or "Combat Knife" or "Mace":
+                                B.life -= 3
+                                E.text = (
+                                    "Your weapon manages to deal considerable damage."
+                                )
+                            E.event_output()
+                        case "Swing":
+                            if S.weapon == "Construction hammer" or "Knife" or "Bat":
+                                B.life -= 1
+                                E.text = "You manage to inflict a minor wound."
+                            if S.weapon == "Shortsword" or "Combat Knife" or "Mace":
+                                B.life -= 3
+                                E.text = (
+                                    "Your weapon manages to deal considerable damage."
+                                )
+                            E.event_output()
+                        case "Slash":
+                            if S.weapon == "Construction hammer" or "Knife" or "Bat":
+                                B.life -= 1
+                                E.text = "You manage to inflict a minor wound."
+                            if S.weapon == "Shortsword" or "Combat Knife" or "Mace":
+                                B.life -= 3
+                                E.text = (
+                                    "Your weapon manages to deal considerable damage."
+                                )
+                            E.event_output()
+            if B.life <= 0:
+                del B
+                E.text = """The enemy collapses, too battered to remain upright.
 It melts back into the blood from whence it came."""
-            match(E.Text):
-                case("You find nothing."):
-                    match(self.Choice):
-                        case("Walk"):
-                            E.randomizeEvent1()
-                            E.EventOutput()
-                        case("Run"):
-                            E.randomizeEvent1()
-                            E.EventOutput()
-                        case("Move"):
-                            E.randomizeEvent1()
-                            E.EventOutput()
-                        case("Advance"):
-                            E.randomizeEvent1()
-                            E.EventOutput()
-                        case("Progress"):
-                            E.randomizeEvent1()
-                            E.EventOutput()
-                        case("END OF THE LINE"):
-                            print("Your words sink into the sea...")
-                            S.Dead=True
-                        case("I CAST NEKOMANCY, RICE!"):
-                            E.Text="You find another seaman."
-                            print("A fresh seaman bursts out from the ocean in front of you, getting up and immediatley starting a fight.")
-                        case(_):
-                            print("""Such is not an option.
+        match E.text:
+            case "You find nothing.":
+                match self.choice:
+                    case "Walk":
+                        E.randomize_event1()
+                        E.event_output()
+                    case "Run":
+                        E.randomize_event1()
+                        E.event_output()
+                    case "Move":
+                        E.randomize_event1()
+                        E.event_output()
+                    case "Advance":
+                        E.randomize_event1()
+                        E.event_output()
+                    case "Progress":
+                        E.randomize_event1()
+                        E.event_output()
+                    case "END OF THE LINE":
+                        print("Your words sink into the sea...")
+                        S.dead = True
+                    case "I CAST NEKOMANCY, RICE!":
+                        E.text = "You find another seaman."
+                        print(
+                            "A fresh seaman bursts out from the ocean in front of you, getting up and immediatley starting a fight."
+                        )
+                    case _:
+                        print("""Such is not an option.
 Check for typos?
 Actions must be ONE WORD LONG.""")
-                        
-                case("You find a small building of unknown make or model."):
-                    match(self.Choice):
-                        case("Walk"):
-                            E.randomizeEvent1()
-                            E.EventOutput()
-                        case("Run"):
-                            E.randomizeEvent1()
-                            E.EventOutput()
-                        case("Move"):
-                            E.randomizeEvent1()
-                            E.EventOutput()
-                        case("Advance"):
-                            E.randomizeEvent1()
-                            E.EventOutput()
-                        case("Progress"):
-                            E.randomizeEvent1()
-                            E.EventOutput()
-                        case("Enter"):
-                            E.Text="""You go inside the building, finding a... grey seaman?
+
+            case "You find a small building of unknown make or model.":
+                match self.choice:
+                    case "Walk":
+                        E.randomize_event1()
+                        E.event_output()
+                    case "Run":
+                        E.randomize_event1()
+                        E.event_output()
+                    case "Move":
+                        E.randomize_event1()
+                        E.event_output()
+                    case "Advance":
+                        E.randomize_event1()
+                        E.event_output()
+                    case "Progress":
+                        E.randomize_event1()
+                        E.event_output()
+                    case "Enter":
+                        E.text = """You go inside the building, finding a... grey seaman?
 Its eyes glow yellow, it wears a carefree expression.
 It has a tail... whatever that could be for is unknown."""
-                            E.EventOutput()
-                        case("END OF THE LINE"):
-                            print("Your words sink into the sea...")
-                            S.Dead=True
-                        case(_):
-                            print("""Such is not an option.
+                        E.event_output()
+                    case "END OF THE LINE":
+                        print("Your words sink into the sea...")
+                        S.dead = True
+                    case _:
+                        print("""Such is not an option.
 Check for typos?
 Actions must be ONE WORD LONG.""")
-                            
-                case("""You go inside the building, finding a... grey seaman?
+
+            case """You go inside the building, finding a... grey seaman?
 Its eyes glow yellow, it wears a carefree expression.
-It has a tail... whatever that could be for is unknown."""):
-                    match(self.Choice):
-                        case("Fight"):
-                            E.Text="""Your bones liquefy, you collapse onto the floor as Jim taunts you.
+It has a tail... whatever that could be for is unknown.""":
+                match self.choice:
+                    case "Fight":
+                        E.text = """Your bones liquefy, you collapse onto the floor as Jim taunts you.
 'Sorry bud, not a boss fight.'
 You die, lungs collapsing as you melt into the blood from whence you came."""
-                            E.EventOutput()
-                            time.sleep(3)
-                            quit()
-                        case("Commune"):
-                            E.randomizeEvent2()
-                            E.EventOutput()
-                        case("Leave"):
-                            E.randomizeEvent1()
-                            E.EventOutput()
-                        case("Exit"):
-                            E.randomizeEvent1()
-                            E.EventOutput()
-                            
-                case(_):
-                    print("""Everything around you turns various shades of grey, a voice rings in your head.
+                        E.event_output()
+                        time.sleep(3)
+                        quit()
+                    case "Commune":
+                        E.randomize_event2()
+                        E.event_output()
+                    case "Leave":
+                        E.randomize_event1()
+                        E.event_output()
+                    case "Exit":
+                        E.randomize_event1()
+                        E.event_output()
+
+            case _:
+                print("""Everything around you turns various shades of grey, a voice rings in your head.
 'Hey, time god here, you've hit the end of this timeline. Nothin left 'ere.'
 'I think you should restart the game, but I can't stop ya.'""")
 
 
-C=Choice()    
-        
-        
+C = Choice()
+
 
 print("You open your eyes for the very first time, you are under a sea of blood.")
 time.sleep(3)
-print("You swim up, the knowledge of drowning and how to swim almost being instinctual.")
+print(
+    "You swim up, the knowledge of drowning and how to swim almost being instinctual."
+)
 time.sleep(3)
 print("You breach the surface, exhausted but alive.")
 time.sleep(1.5)
 print("You get up.")
 time.sleep(1.5)
 
-S.WhoAreYou()
+S.who_are_you()
 time.sleep(3)
 
-E.randomizeEvent1()
-E.EventOutput()
+E.randomize_event1()
+E.event_output()
 while True:
-    E.IsDead()
-    E.IsCombat()
-    C.ChoiceInput()
+    E.is_dead()
+    E.is_combat()
+    C.choice_input()
     time.sleep(0.35)
-    C.ChoiceResult()
-
-        
+    C.choice_result()
