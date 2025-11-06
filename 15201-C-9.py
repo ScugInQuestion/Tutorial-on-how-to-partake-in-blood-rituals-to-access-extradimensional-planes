@@ -3,7 +3,7 @@ import random
 
 
 class Sailor:
-    weapon: list[str]  # or should it just be str??? ~Cole
+    weapon: str
     wounds: int
     strength: int
     status: str
@@ -12,15 +12,17 @@ class Sailor:
     dead: bool
 
     def __init__(self):
-        self.weapon = [
-            "Construction hammer",
-            "Knife",
-            "Bat",
-            "Mace",
-            "Shortsword",
-            "Combat Knife",
-            #                     "Rapier","Spear","Warhammer","Zweihander"
-        ]
+        self.weapon = random.choice(
+            [
+                "Construction hammer",
+                "Knife",
+                "Bat",
+                "Mace",
+                "Shortsword",
+                "Combat Knife",
+                # "Rapier","Spear","Warhammer","Zweihander"
+            ]
+        )
         self.wounds = 0
         self.strength = 0
         self.status = "Fine"
@@ -55,11 +57,11 @@ S = Sailor()
 
 class Boarder:
     tier: int
-    weapon1: list[str]  # or str? ~Cole
-    weapon2: list[str]
-    weapon3: list[str]
-    weapon4: list[str]
-    weapon5: list[str]
+    weapon1: str
+    weapon2: str
+    weapon3: str
+    weapon4: str
+    weapon5: str
     wounds: int
     max_life: int
     life: int
@@ -69,18 +71,20 @@ class Boarder:
 
     def __init__(self):
         self.tier = random.randint(1, 5)
-        self.weapon1 = [
-            "Bare Hands",
-            "Bare Hands",
-            "Bare Hands",
-            "Construction hammer",
-            "Knife",
-            "Bat",
-        ]
-        self.weapon2 = ["Construction hammer", "Knife", "Bat"]
-        self.weapon3 = ["Spear", "Shortsword", "Combat Knife"]
-        self.weapon4 = ["Rapier", "Mace", "Warhammer", "Zweihander"]
-        self.weapon5 = ["Whipsword", "Grand Gavel", "Jousting Lance"]
+        self.weapon1 = random.choice(
+            [
+                "Bare Hands",
+                "Bare Hands",
+                "Bare Hands",
+                "Construction hammer",
+                "Knife",
+                "Bat",
+            ]
+        )
+        self.weapon2 = random.choice(["Construction hammer", "Knife", "Bat"])
+        self.weapon3 = random.choice(["Spear", "Shortsword", "Combat Knife"])
+        self.weapon4 = random.choice(["Rapier", "Mace", "Warhammer", "Zweihander"])
+        self.weapon5 = random.choice(["Whipsword", "Grand Gavel", "Jousting Lance"])
         self.wounds = 0
         self.max_life = random.randint(1, 5) * self.tier + self.tier
         self.life = self.max_life
