@@ -1,32 +1,32 @@
 import time
 import random
 
+
 class Sailor():
     def __init__(self):
-        self.Weapon=["Construction hammer","Knife","Bat","Spear","Shortsword","Combat Knife","Rapier","Mace","Warhammer","Zweihander"]
+        self.Weapon=["Construction hammer","Knife","Bat",
+                     "Mace","Shortsword","Combat Knife",
+#                     "Rapier","Spear","Warhammer","Zweihander"
+                     ]
         self.Wounds=0
-        self.Stamina=10
+        self.Strength=0
         self.Status="Fine"
         self.Tendancies=["Stoat","Magpie","Hare"]
         self.LastStand=False
         self.Dead=False
 
+
     def Attack(self):
         if Weapon=="Bare Hands":
-            Attack=1
+            self.Strength=1
     
     def Death(self):
         if Wounds>=10:
-            if self.Tendancies=="Stoat":
-                LastStand=True
-            elif Stamina<3:
-                LastStand=True
-            else:
-                Dead=True
+            self.Dead=True
 
     def WhoAreYou(self):
-        print("You are a Sailor-class seaman with",self.Wounds,"damage sustained,",self.Stamina,"Stamina left, are currently",self.Status,". You have the tendancies of the",random.choice(self.Tendancies),"and are armed with a",random.choice(self.Weapon),".")
-
+        print("You are a Sailor-class seaman with",self.Wounds,"damage sustained, are currently",self.Status,". You have the tendancies of the",random.choice(self.Tendancies),"and are armed with a",random.choice(self.Weapon),".")
+S=Sailor()
 
 class Boarder():
     def __init__(self):
@@ -76,6 +76,12 @@ class Event():
     def randomizeEvent1(self):
         self.Text=random.choice(self.Textlist1)
 
+    def IsDead(self):
+        if S.Dead==True:
+            self.Text="""You collapse onto the ground, vision fading and your mangled limbs weak.
+Your mind grows still as life leaves your body.
+You have died, your body having melted back into the sea."""
+
     def randomizeEvent2(self):
         self.Text=random.choice(self.Textlist2)
 
@@ -100,27 +106,64 @@ class Choice():
         self.Choice=input("[ACTION HERE] ")
 
     def ChoiceResult(self):
-##        if E.Combat==True:
-##            B=Boarder()
-##            return(B)
-##            if self.Choice=="Swing"or"Slash"or"Cut"or"Cleave"or"Bash":
-##                if S.Weapon=="Construction hammer"or"Knife"or"Bat":
-##                    B.Life-=1
-##                    E.Text=="You manage to inflict a minor wound."
-##                    E.EventOutput()
-##                else:
-##                   print("Such an option is not availible. (Can't run, check for typos)")
-##                   print(E.Text)
-##            if B.Life<=0:
-##                E.Combat==False
-        if E.Combat==False:
-            match(S.Dead):
-                case(True):
-                    self.Text="""You tumble onto your stomach, unable to remain upright any longer.
-Eyes shut, you collapse into the sea from which you came."""
-                    print(self.Text)
-                    time.sleep(3)
-                    quit()
+            match(E.Text):
+                case("""You collapse onto the ground, vision fading and your mangled limbs weak.
+Your mind grows still as life leaves your body.
+You have died, your body having melted back into the sea."""):
+                    match(self.Choice):
+                        case(_):
+                            E.EventOutput()
+                            time.sleep(3)
+                            quit()
+            if E.Combat==True:
+                match(E.Text):
+                    case("You find another seaman."):
+                        B=Boarder()
+                        match(self.Choice):
+                            case("Swipe"):
+                                if S.Weapon=="Construction hammer"or"Knife"or"Bat":
+                                    B.Life-=1
+                                    E.Text="You manage to inflict a minor wound."
+                                elif S.Weapon=="Shortsword"or"Combat Knife"or"Mace":
+                                    B.Life-=3
+                                    E.Text="Your weapon manages to deal considerable damage."
+                                E.EventOutput()
+                            case("Slice"):
+                                if S.Weapon=="Construction hammer"or"Knife"or"Bat":
+                                    B.Life-=1
+                                    E.Text="You manage to inflict a minor wound."
+                                if S.Weapon=="Shortsword"or"Combat Knife"or"Mace":
+                                    B.Life-=3
+                                    E.Text="Your weapon manages to deal considerable damage."
+                                E.EventOutput()
+                            case("Bash"):
+                                if S.Weapon=="Construction hammer"or"Knife"or"Bat":
+                                    B.Life-=1
+                                    E.Text="You manage to inflict a minor wound."
+                                if S.Weapon=="Shortsword"or"Combat Knife"or"Mace":
+                                    B.Life-=3
+                                    E.Text="Your weapon manages to deal considerable damage."
+                                E.EventOutput()
+                            case("Swing"):
+                                if S.Weapon=="Construction hammer"or"Knife"or"Bat":
+                                    B.Life-=1
+                                    E.Text="You manage to inflict a minor wound."
+                                if S.Weapon=="Shortsword"or"Combat Knife"or"Mace":
+                                    B.Life-=3
+                                    E.Text="Your weapon manages to deal considerable damage."
+                                E.EventOutput()
+                            case("Slash"):
+                                if S.Weapon=="Construction hammer"or"Knife"or"Bat":
+                                    B.Life-=1
+                                    E.Text="You manage to inflict a minor wound."
+                                if S.Weapon=="Shortsword"or"Combat Knife"or"Mace":
+                                    B.Life-=3
+                                    E.Text="Your weapon manages to deal considerable damage."
+                                E.EventOutput()
+                if B.Life<=0:
+                    del B
+                    E.Text="""The enemy collapses, too battered to remain upright.
+It melts back into the blood from whence it came."""
             match(E.Text):
                 case("You find nothing."):
                     match(self.Choice):
@@ -139,12 +182,17 @@ Eyes shut, you collapse into the sea from which you came."""
                         case("Progress"):
                             E.randomizeEvent1()
                             E.EventOutput()
-                        case("END OF THE LINE, LITTLE MAN!"):
-                            S.Wounds=10
+                        case("END OF THE LINE"):
+                            print("Your words sink into the sea...")
+                            S.Dead=True
+                        case("I CAST NEKOMANCY, RICE!"):
+                            E.Text="You find another seaman."
+                            print("A fresh seaman bursts out from the ocean in front of you, getting up and immediatley starting a fight.")
                         case(_):
                             print("""Such is not an option.
 Check for typos?
 Actions must be ONE WORD LONG.""")
+                        
                 case("You find a small building of unknown make or model."):
                     match(self.Choice):
                         case("Walk"):
@@ -167,12 +215,14 @@ Actions must be ONE WORD LONG.""")
 Its eyes glow yellow, it wears a carefree expression.
 It has a tail... whatever that could be for is unknown."""
                             E.EventOutput()
-                        case("END OF THE LINE, LITTLE MAN!"):
-                            S.Wounds=10
+                        case("END OF THE LINE"):
+                            print("Your words sink into the sea...")
+                            S.Dead=True
                         case(_):
                             print("""Such is not an option.
 Check for typos?
 Actions must be ONE WORD LONG.""")
+                            
                 case("""You go inside the building, finding a... grey seaman?
 Its eyes glow yellow, it wears a carefree expression.
 It has a tail... whatever that could be for is unknown."""):
@@ -193,6 +243,7 @@ You die, lungs collapsing as you melt into the blood from whence you came."""
                         case("Exit"):
                             E.randomizeEvent1()
                             E.EventOutput()
+                            
                 case(_):
                     print("""Everything around you turns various shades of grey, a voice rings in your head.
 'Hey, time god here, you've hit the end of this timeline. Nothin left 'ere.'
@@ -211,13 +262,15 @@ print("You breach the surface, exhausted but alive.")
 time.sleep(1.5)
 print("You get up.")
 time.sleep(1.5)
-S=Sailor()
+
 S.WhoAreYou()
 time.sleep(3)
 
 E.randomizeEvent1()
 E.EventOutput()
 while True:
+    E.IsDead()
+    E.IsCombat()
     C.ChoiceInput()
     time.sleep(0.35)
     C.ChoiceResult()
